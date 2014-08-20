@@ -1,0 +1,31 @@
+### makeCacheMatrix allows to design a matrix to calculate the inverse
+###x <- makeCacheMatrix((matrix(c(2,4,3,5),2,2))) make a matrix of 2x2
+###the arguments inside the function makeCacheMatrix is m null and if the matrix can be solve(inverse) m<<- to inverse matrix, once the matrix x is attaches to the function makeCacheMatrix, the list function set, get, getmatrix and setmatrix can be accessed with the symbol $. The functions m <<- NULL create a variable without value, and when a matrix is created, then m is equal to the matrix.
+###The cacheSolve function acces to functions calculated in makeCacheMatrix, when a matrix is different ! to null, then m is equal to the function in x called getmatrix, and if the matrix is equal to get then the function of setmatrix is used.
+
+makeCacheMatrix <- function(x = matrix()) {
+  	m<-NULL
+	  	set<-function(y){
+	  	x<<-y
+	  	m<<-NULL
+	}
+		get<-function() x
+		setmatrix<-function(solve) m<<- solve
+		getmatrix<-function() m
+		list(set=set, get=get,
+		   setmatrix=setmatrix,
+		   getmatrix=getmatrix)
+}
+
+cacheSolve <- function(x=matrix(), ...) {
+    m<-x$getmatrix()
+    if(!is.null(m)){
+      message("getting cached data")
+      return(m)
+    }
+    matrix<-x$get()
+    m<-solve(matrix, ...)
+    x$setmatrix(m)
+    m
+}
+
